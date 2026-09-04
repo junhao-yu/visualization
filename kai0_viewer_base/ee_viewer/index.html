@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EE Trajectory Live Viewer</title>
+    <style>
+      body { margin: 0; font-family: Arial, sans-serif; background: #0f172a; color: #e2e8f0; }
+      #toolbar { padding: 10px 16px; background: #111827; display: flex; gap: 16px; align-items: center; }
+      #canvas { width: 100vw; height: calc(100vh - 52px); display: block; }
+      .legend { display: flex; gap: 12px; font-size: 12px; flex-wrap: wrap; }
+      .swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 6px; }
+      #status { margin-left: auto; font-size: 12px; color: #cbd5f5; }
+      #replayControls { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #cbd5f5; }
+      #replaySlider { width: 220px; }
+      #replayLabel { min-width: 64px; text-align: right; }
+      #datasetControls { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #cbd5f5; flex-wrap: wrap; }
+      #datasetControls label { display: flex; align-items: center; gap: 5px; }
+      #datasetControls select { color: #e2e8f0; background: #1f2937; border: 1px solid #475569; border-radius: 4px; padding: 3px 5px; }
+      #catalogRefresh { color: #cbd5f5; background: #1f2937; border: 1px solid #475569; border-radius: 4px; cursor: pointer; }
+    </style>
+  </head>
+  <body>
+    <div id="toolbar">
+      <strong>EE Trajectory (Live)</strong>
+      <div class="legend" id="legend"></div>
+      <div id="datasetControls">
+        <label for="episodeSelect">Episode <select id="episodeSelect"><option value="">loading...</option></select></label>
+        <label for="horizonSelect">Chunk <select id="horizonSelect"><option value="">-</option></select></label>
+        <button id="catalogRefresh" type="button" title="Refresh available episodes">↻</button>
+      </div>
+      <div id="replayControls">
+        <label for="replaySlider">Replay</label>
+        <input id="replaySlider" type="range" min="0" max="0" step="1" value="0" />
+        <span id="replayLabel">live</span>
+      </div>
+      <div id="status">Waiting...</div>
+    </div>
+    <canvas id="canvas"></canvas>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "/vendor/three.module.js",
+          "three/examples/jsm/loaders/": "/vendor/"
+        }
+      }
+    </script>
+    <script type="module">
+      import * as THREE from "three";
+      import { OrbitControls } from "/vendor/OrbitControls.js";
+      import URDFLoader from "/vendor/URDFLoader.module.js";
+
+      const canvas = document.getElementById("canvas");
+      const statusEl = document.getElementById("status");
+      const legendEl = document.getElementById("legend");
+      const replaySliderEl = document.getElementById("replaySlider");
+      const replayLabelEl = document.getElementById("replayLabel");
+      const episodeSelectEl = document.getElementById("episodeSelect");
+      const horizonSelectEl = document.getElementById("horizonSelect");
+      const catalogRefreshEl = document.getElementById("catalogRefresh");
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0f172a);
+      const camera = new THREE.PerspectiveCamera(45, 2, 0.01, 50);
+      camera.position.set(1.6, 1.2, 1.6);
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.target.set(0, 0.6, 0);
+      controls.update();
+      scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+      const light = new THREE.DirectionalLight(0xffffff, 0.8);
+      light.position.set(2, 3, 2);
+      scene.add(light);
+      scene.add(new THREE.GridHelper(2, 20, 0x334155, 0x1f2937));
+      const loader = new URDFLoader();
+      const robotRotation = new THREE.Euler(-Math.PI / 2, 0, 0);
+      const trajRotation = new THREE.Matrix4().makeRotationFromEuler(robotRotation);
+      let robotRef = null;
+      loader.load("../ee_assets/robot.urdf", (robot) => {
+        robot.rotation.copy(robotRotation);
+        scene.add(robot);
+        robotRef = robot;
+      });
+
+      const lines = new Map();
+      const markers = new Map();
+      let lastKeySet = new Set();
+      let lastBounds = null;
+      let latestSeries = [];
+      let replayMaxStep = 0;
+      let replayStep = 0;
+      let followLatest = true;
+      let catalogEntries = [];
+      let catalogSelection = "";
+      let loadingSelection = false;
+
+      function setStatus(text) {
+        if (statusEl) statusEl.textContent = text;
+      }
+
+      function populateHorizonOptions(episodeId, preferredHorizon = "") {
+        const horizons = catalogEntries
+          .filter((item) => String(item.episode_id) === String(episodeId))
+          .sort((a, b) => Number(a.horizon) - Number(b.horizon));
+        horizonSelectEl.innerHTML = "";
+        horizons.forEach((item) => {
+          const option = document.createElement("option");
+          option.value = String(item.horizon);
+          option.textContent = `${item.horizon} steps`;
+          horizonSelectEl.appendChild(option);
+        });
+        horizonSelectEl.disabled = horizons.length === 0;
+        if (horizons.length) {
+          const selected = horizons.some((item) => String(item.horizon) === String(preferredHorizon))
+            ? String(preferredHorizon) : String(horizons[0].horizon);
+          horizonSelectEl.value = selected;
+        }
+        return horizons;
+      }
+
+      async function loadSelectedReplay() {
+        if (loadingSelection || !episodeSelectEl.value || !horizonSelectEl.value) return;
+        const key = `${episodeSelectEl.value}:${horizonSelectEl.value}`;
+        if (key === catalogSelection) return;
+        loadingSelection = true;
+        setStatus(`loading Episode ${episodeSelectEl.value} · ${horizonSelectEl.value} steps...`);
+        try {
+          const response = await fetch("/api/load", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ episode_id: Number(episodeSelectEl.value), horizon: Number(horizonSelectEl.value) }),
+          });
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.detail || result.error || "load failed");
+          catalogSelection = key;
+          latestSeries = [];
+          replayMaxStep = 0;
+          replayStep = 0;
+          followLatest = true;
+          updateSeries([]);
+          setStatus(`Episode ${episodeSelectEl.value} · ${horizonSelectEl.value} steps`);
+          await poll();
+        } catch (error) {
+          setStatus(`load failed: ${error.message}`);
+        } finally {
+          loadingSelection = false;
+        }
+      }
+
+      async function loadCatalog(preserve = true) {
+        try {
+          const response = await fetch("/api/catalog", { cache: "no-store" });
+          if (!response.ok) throw new Error("catalog unavailable");
+          const result = await response.json();
+          catalogEntries = Array.isArray(result.entries) ? result.entries : [];
+          const previousEpisode = preserve ? episodeSelectEl.value : "";
+          const previousHorizon = preserve ? horizonSelectEl.value : "";
+          const episodes = [...new Set(catalogEntries.map((item) => String(item.episode_id)))].sort((a, b) => Number(a) - Number(b));
+          episodeSelectEl.innerHTML = "";
+          episodes.forEach((episode) => {
+            const option = document.createElement("option");
+            option.value = episode;
+            option.textContent = `Episode ${episode}`;
+            episodeSelectEl.appendChild(option);
+          });
+          episodeSelectEl.disabled = episodes.length === 0;
+          if (!episodes.length) {
+            episodeSelectEl.innerHTML = "<option value=\"\">no replay found</option>";
+            horizonSelectEl.innerHTML = "<option value=\"\">-</option>";
+            horizonSelectEl.disabled = true;
+            if (!latestSeries.length) setStatus("Waiting for replay files...");
+            return;
+          }
+          episodeSelectEl.value = episodes.includes(previousEpisode) ? previousEpisode : episodes[0];
+          populateHorizonOptions(episodeSelectEl.value, previousHorizon);
+          await loadSelectedReplay();
+        } catch (error) {
+          setStatus(`catalog unavailable: ${error.message}`);
+        }
+      }
+
+      function resize() {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        renderer.setSize(width, height, false);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      }
+      window.addEventListener("resize", resize);
+      resize();
+
+      const predPalette = ["#38bdf8", "#0ea5e9", "#7dd3fc", "#38bdf8"];
+      const gtPalette = ["#f97316", "#fb923c", "#fdba74", "#f97316"];
+
+      function normalizePoints(points) {
+        const out = [];
+        points.forEach((p) => {
+          if (!p) return;
+          let x = p[0];
+          let y = p[1];
+          let z = p[2];
+          if (p && typeof p === "object" && !Array.isArray(p)) {
+            x = p.x ?? p[0];
+            y = p.y ?? p[1];
+            z = p.z ?? p[2];
+          }
+          if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) return;
+          out.push([x, y, z]);
+        });
+        return out;
+      }
+
+      function collectSeries(traj, palette, prefix) {
+        const series = [];
+        if (Array.isArray(traj)) {
+          const points = normalizePoints(traj);
+          if (points.length) {
+            series.push({ id: `${prefix}:default`, points, color: palette[0], label: `${prefix}` });
+          }
+          return series;
+        }
+        if (traj && typeof traj === "object") {
+          Object.entries(traj).forEach(([name, pts], idx) => {
+            const points = normalizePoints(pts || []);
+            if (!points.length) return;
+            series.push({
+              id: `${prefix}:${name}`,
+              points,
+              color: palette[idx % palette.length],
+              label: `${prefix} · ${name}`,
+            });
+          });
+        }
+        return series;
+      }
+
+      function updateLegend(series) {
+        const keys = series.map((s) => s.id).join("|");
+        if (keys === legendEl.dataset.keys) return;
+        legendEl.dataset.keys = keys;
+        legendEl.innerHTML = "";
+        series.forEach((item) => {
+          const el = document.createElement("span");
+          const sw = document.createElement("i");
+          sw.className = "swatch";
+          sw.style.background = item.color;
+          el.appendChild(sw);
+          el.appendChild(document.createTextNode(item.label));
+          legendEl.appendChild(el);
+        });
+      }
+
+      function updateBounds(series) {
+        let minX = Infinity;
+        let minY = Infinity;
+        let minZ = Infinity;
+        let maxX = -Infinity;
+        let maxY = -Infinity;
+        let maxZ = -Infinity;
+        series.forEach(({ points }) => {
+          points.forEach(([x, y, z]) => {
+            minX = Math.min(minX, x);
+            minY = Math.min(minY, y);
+            minZ = Math.min(minZ, z);
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
+            maxZ = Math.max(maxZ, z);
+          });
+        });
+        if (!Number.isFinite(minX)) return;
+        const center = new THREE.Vector3(
+          (minX + maxX) * 0.5,
+          (minY + maxY) * 0.5,
+          (minZ + maxZ) * 0.5
+        );
+        const span = Math.max(maxX - minX, maxY - minY, maxZ - minZ);
+        if (!lastBounds || Math.abs(span - lastBounds.span) > lastBounds.span * 0.2) {
+          controls.target.copy(center);
+          camera.position.set(center.x + 1.6, center.y + 1.2, center.z + 1.6);
+          controls.update();
+          lastBounds = { span };
+        }
+      }
+
+      function updateSeries(series) {
+        const keep = new Set(series.map((s) => s.id));
+        updateLegend(series);
+        series.forEach((item) => {
+          const geometry = new THREE.BufferGeometry().setFromPoints(
+            item.points.map((p) => new THREE.Vector3(p[0], p[1], p[2]).applyMatrix4(trajRotation))
+          );
+          if (lines.has(item.id)) {
+            const line = lines.get(item.id);
+            line.geometry.dispose();
+            line.geometry = geometry;
+            line.material.color = new THREE.Color(item.color);
+          } else {
+            const material = new THREE.LineBasicMaterial({ color: item.color });
+            const line = new THREE.Line(geometry, material);
+            scene.add(line);
+            lines.set(item.id, line);
+          }
+          const last = item.points[item.points.length - 1];
+          if (last) {
+            const key = `${item.id}:marker`;
+            const pos = new THREE.Vector3(last[0], last[1], last[2]).applyMatrix4(trajRotation);
+            if (!markers.has(key)) {
+              const sphere = new THREE.Mesh(
+                new THREE.SphereGeometry(0.01, 12, 12),
+                new THREE.MeshStandardMaterial({ color: item.color })
+              );
+              scene.add(sphere);
+              markers.set(key, sphere);
+            }
+            markers.get(key).position.copy(pos);
+          }
+        });
+
+        for (const [id, line] of lines.entries()) {
+          if (!keep.has(id)) {
+            scene.remove(line);
+            line.geometry.dispose();
+            line.material.dispose();
+            lines.delete(id);
+          }
+        }
+        for (const [id, marker] of markers.entries()) {
+          if (!keep.has(id.replace(":marker", ""))) {
+            scene.remove(marker);
+            marker.geometry.dispose();
+            marker.material.dispose();
+            markers.delete(id);
+          }
+        }
+
+        lastKeySet = keep;
+        render();
+      }
+
+      function getMaxStep(series) {
+        let maxLen = 0;
+        series.forEach((item) => {
+          maxLen = Math.max(maxLen, item.points.length);
+        });
+        return Math.max(0, maxLen - 1);
+      }
+
+      function clipSeriesByStep(series, step) {
+        return series
+          .map((item) => {
+            const end = Math.min(Math.max(step, 0), item.points.length - 1);
+            return {
+              ...item,
+              points: item.points.slice(0, end + 1),
+            };
+          })
+          .filter((item) => item.points.length > 0);
+      }
+
+      function updateReplayControls() {
+        replaySliderEl.max = String(replayMaxStep);
+        replaySliderEl.value = String(Math.min(replayStep, replayMaxStep));
+        if (replayStep >= replayMaxStep) {
+          replayLabelEl.textContent = "live";
+        } else {
+          replayLabelEl.textContent = `${replayStep}/${replayMaxStep}`;
+        }
+      }
+
+      function renderReplayFrame() {
+        if (!latestSeries.length) return;
+        const visibleSeries = clipSeriesByStep(latestSeries, replayStep);
+        updateSeries(visibleSeries);
+      }
+
+      replaySliderEl.addEventListener("input", () => {
+        replayStep = Number.parseInt(replaySliderEl.value, 10) || 0;
+        followLatest = replayStep >= replayMaxStep;
+        updateReplayControls();
+        renderReplayFrame();
+      });
+
+      episodeSelectEl.addEventListener("change", async () => {
+        populateHorizonOptions(episodeSelectEl.value);
+        await loadSelectedReplay();
+      });
+      horizonSelectEl.addEventListener("change", loadSelectedReplay);
+      catalogRefreshEl.addEventListener("click", () => loadCatalog(false));
+
+      function render() {
+        controls.update();
+        renderer.render(scene, camera);
+      }
+
+      async function poll() {
+        try {
+          const res = await fetch("/api/trajectory", { cache: "no-store" });
+          if (!res.ok) return;
+          const payload = await res.json();
+          const predSeries = collectSeries(payload.trajectory_pred, predPalette, "pred");
+          const gtSeries = collectSeries(payload.trajectory_gt, gtPalette, "gt");
+          const series = [...gtSeries, ...predSeries];
+          if (series.length) {
+            latestSeries = series;
+            replayMaxStep = getMaxStep(series);
+            if (followLatest || replayStep > replayMaxStep) {
+              replayStep = replayMaxStep;
+            }
+            updateBounds(series);
+            updateReplayControls();
+            renderReplayFrame();
+          }
+          if (statusEl) {
+            statusEl.textContent = payload.updated_at ? `updated ${payload.updated_at}` : "live";
+          }
+        } catch (err) {
+          if (statusEl) statusEl.textContent = "disconnected";
+        }
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        render();
+      }
+      animate();
+      setInterval(poll, 1000);
+      setInterval(loadCatalog, 5000);
+      loadCatalog(false);
+      poll();
+    </script>
+  </body>
+</html>

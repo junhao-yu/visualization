@@ -1,0 +1,1719 @@
+{
+  "protocol": "Kai0-style per-frame GT-conditioned next-action evaluation: at every recorded frame, the model receives that frame's ground-truth cameras and robot state, predicts a 32-step action chunk, and only the first action is retained for comparison.",
+  "split": "external_dataset",
+  "episode_id": 136,
+  "ckpt": "/home/magiclab/yujunhao/Fast-WAM-Inference/checkpoints/place_lemon_weights/step_003820.pt",
+  "stats": "/home/magiclab/yujunhao/Fast-WAM-Inference/checkpoints/place_lemon_weights/dataset_stats.json",
+  "urdf": "/home/magiclab/yujunhao/open_loop_test/evaluator/dual_system.urdf",
+  "manifest": null,
+  "dataset_root": "/home/magiclab/yujunhao/open_loop_test/data/把柠檬放盘子里-松灵/task_1700/teleop_20260804",
+  "dataset_task": "Coke",
+  "model_prompt": "place the lemon on the plate",
+  "camera_keys": [
+    "cam_front",
+    "cam_left",
+    "cam_right"
+  ],
+  "state_lerobot_key": "observation.qpos",
+  "external_dataset": true,
+  "training_membership": "not verified by this script; external dataset supplied by the user",
+  "dataset_info_sha256": "469c8ad55620c14f67a236e12daceeb5876bf513400c2e6c6a8fd96af65d34c4",
+  "episodes_sha256": "003c042fa1c05e13b25fe889003953b0c0b4a79fa48d9ad43b603e8530e4be59",
+  "fps": 30.0,
+  "episode_frames": 209,
+  "evaluated_frames": 209,
+  "episode_seconds": 6.966666666666667,
+  "evaluated_seconds": 6.966666666666667,
+  "evaluation_mode": "per_frame_first_action",
+  "action_horizon": 32,
+  "action_steps_used_per_inference": 1,
+  "num_inference_calls": 209,
+  "complete_episode": true,
+  "inference_seed": 0,
+  "num_inference_steps": 10,
+  "action_mae": 0.04831436276435852,
+  "action_rmse": 0.07036671787500381,
+  "tcp_error_m": {
+    "left_mean": 0.10100958778901951,
+    "left_p95": 0.12774456767276804,
+    "right_mean": 0.022138019470695106,
+    "right_p95": 0.0427996904382521,
+    "both_mean": 0.061573803629857315
+  },
+  "inferences": [
+    {
+      "inference_index": 0,
+      "dataset_index": 0,
+      "frame_index": 0,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600000,
+      "mae": 0.059470176696777344
+    },
+    {
+      "inference_index": 1,
+      "dataset_index": 1,
+      "frame_index": 1,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600001,
+      "mae": 0.05684422329068184
+    },
+    {
+      "inference_index": 2,
+      "dataset_index": 2,
+      "frame_index": 2,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600002,
+      "mae": 0.060733284801244736
+    },
+    {
+      "inference_index": 3,
+      "dataset_index": 3,
+      "frame_index": 3,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600003,
+      "mae": 0.060183294117450714
+    },
+    {
+      "inference_index": 4,
+      "dataset_index": 4,
+      "frame_index": 4,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600004,
+      "mae": 0.05943905934691429
+    },
+    {
+      "inference_index": 5,
+      "dataset_index": 5,
+      "frame_index": 5,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600005,
+      "mae": 0.06453792750835419
+    },
+    {
+      "inference_index": 6,
+      "dataset_index": 6,
+      "frame_index": 6,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600006,
+      "mae": 0.06165476515889168
+    },
+    {
+      "inference_index": 7,
+      "dataset_index": 7,
+      "frame_index": 7,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600007,
+      "mae": 0.05778947100043297
+    },
+    {
+      "inference_index": 8,
+      "dataset_index": 8,
+      "frame_index": 8,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600008,
+      "mae": 0.0587044321000576
+    },
+    {
+      "inference_index": 9,
+      "dataset_index": 9,
+      "frame_index": 9,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600009,
+      "mae": 0.05578216537833214
+    },
+    {
+      "inference_index": 10,
+      "dataset_index": 10,
+      "frame_index": 10,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600010,
+      "mae": 0.06277213990688324
+    },
+    {
+      "inference_index": 11,
+      "dataset_index": 11,
+      "frame_index": 11,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600011,
+      "mae": 0.05862893536686897
+    },
+    {
+      "inference_index": 12,
+      "dataset_index": 12,
+      "frame_index": 12,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600012,
+      "mae": 0.0579339861869812
+    },
+    {
+      "inference_index": 13,
+      "dataset_index": 13,
+      "frame_index": 13,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600013,
+      "mae": 0.05341106653213501
+    },
+    {
+      "inference_index": 14,
+      "dataset_index": 14,
+      "frame_index": 14,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600014,
+      "mae": 0.05559602007269859
+    },
+    {
+      "inference_index": 15,
+      "dataset_index": 15,
+      "frame_index": 15,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600015,
+      "mae": 0.05998658016324043
+    },
+    {
+      "inference_index": 16,
+      "dataset_index": 16,
+      "frame_index": 16,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600016,
+      "mae": 0.04971045255661011
+    },
+    {
+      "inference_index": 17,
+      "dataset_index": 17,
+      "frame_index": 17,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600017,
+      "mae": 0.053240176290273666
+    },
+    {
+      "inference_index": 18,
+      "dataset_index": 18,
+      "frame_index": 18,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600018,
+      "mae": 0.049990326166152954
+    },
+    {
+      "inference_index": 19,
+      "dataset_index": 19,
+      "frame_index": 19,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600019,
+      "mae": 0.04490900784730911
+    },
+    {
+      "inference_index": 20,
+      "dataset_index": 20,
+      "frame_index": 20,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600020,
+      "mae": 0.0413251556456089
+    },
+    {
+      "inference_index": 21,
+      "dataset_index": 21,
+      "frame_index": 21,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600021,
+      "mae": 0.040403466671705246
+    },
+    {
+      "inference_index": 22,
+      "dataset_index": 22,
+      "frame_index": 22,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600022,
+      "mae": 0.037059180438518524
+    },
+    {
+      "inference_index": 23,
+      "dataset_index": 23,
+      "frame_index": 23,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600023,
+      "mae": 0.0335807166993618
+    },
+    {
+      "inference_index": 24,
+      "dataset_index": 24,
+      "frame_index": 24,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600024,
+      "mae": 0.03662941977381706
+    },
+    {
+      "inference_index": 25,
+      "dataset_index": 25,
+      "frame_index": 25,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600025,
+      "mae": 0.03165231645107269
+    },
+    {
+      "inference_index": 26,
+      "dataset_index": 26,
+      "frame_index": 26,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600026,
+      "mae": 0.03369640186429024
+    },
+    {
+      "inference_index": 27,
+      "dataset_index": 27,
+      "frame_index": 27,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600027,
+      "mae": 0.03840120509266853
+    },
+    {
+      "inference_index": 28,
+      "dataset_index": 28,
+      "frame_index": 28,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600028,
+      "mae": 0.030655009672045708
+    },
+    {
+      "inference_index": 29,
+      "dataset_index": 29,
+      "frame_index": 29,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600029,
+      "mae": 0.0340886265039444
+    },
+    {
+      "inference_index": 30,
+      "dataset_index": 30,
+      "frame_index": 30,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600030,
+      "mae": 0.037117842584848404
+    },
+    {
+      "inference_index": 31,
+      "dataset_index": 31,
+      "frame_index": 31,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600031,
+      "mae": 0.038617294281721115
+    },
+    {
+      "inference_index": 32,
+      "dataset_index": 32,
+      "frame_index": 32,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600032,
+      "mae": 0.03674115985631943
+    },
+    {
+      "inference_index": 33,
+      "dataset_index": 33,
+      "frame_index": 33,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600033,
+      "mae": 0.042575862258672714
+    },
+    {
+      "inference_index": 34,
+      "dataset_index": 34,
+      "frame_index": 34,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600034,
+      "mae": 0.039825618267059326
+    },
+    {
+      "inference_index": 35,
+      "dataset_index": 35,
+      "frame_index": 35,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600035,
+      "mae": 0.04203429073095322
+    },
+    {
+      "inference_index": 36,
+      "dataset_index": 36,
+      "frame_index": 36,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600036,
+      "mae": 0.04049146920442581
+    },
+    {
+      "inference_index": 37,
+      "dataset_index": 37,
+      "frame_index": 37,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600037,
+      "mae": 0.04091572016477585
+    },
+    {
+      "inference_index": 38,
+      "dataset_index": 38,
+      "frame_index": 38,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600038,
+      "mae": 0.04288829118013382
+    },
+    {
+      "inference_index": 39,
+      "dataset_index": 39,
+      "frame_index": 39,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600039,
+      "mae": 0.04316138103604317
+    },
+    {
+      "inference_index": 40,
+      "dataset_index": 40,
+      "frame_index": 40,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600040,
+      "mae": 0.042835090309381485
+    },
+    {
+      "inference_index": 41,
+      "dataset_index": 41,
+      "frame_index": 41,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600041,
+      "mae": 0.04455893114209175
+    },
+    {
+      "inference_index": 42,
+      "dataset_index": 42,
+      "frame_index": 42,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600042,
+      "mae": 0.04402245208621025
+    },
+    {
+      "inference_index": 43,
+      "dataset_index": 43,
+      "frame_index": 43,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600043,
+      "mae": 0.04428664967417717
+    },
+    {
+      "inference_index": 44,
+      "dataset_index": 44,
+      "frame_index": 44,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600044,
+      "mae": 0.04334338381886482
+    },
+    {
+      "inference_index": 45,
+      "dataset_index": 45,
+      "frame_index": 45,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600045,
+      "mae": 0.04188377037644386
+    },
+    {
+      "inference_index": 46,
+      "dataset_index": 46,
+      "frame_index": 46,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600046,
+      "mae": 0.042614322155714035
+    },
+    {
+      "inference_index": 47,
+      "dataset_index": 47,
+      "frame_index": 47,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600047,
+      "mae": 0.04459105804562569
+    },
+    {
+      "inference_index": 48,
+      "dataset_index": 48,
+      "frame_index": 48,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600048,
+      "mae": 0.044661518186330795
+    },
+    {
+      "inference_index": 49,
+      "dataset_index": 49,
+      "frame_index": 49,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600049,
+      "mae": 0.046439092606306076
+    },
+    {
+      "inference_index": 50,
+      "dataset_index": 50,
+      "frame_index": 50,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600050,
+      "mae": 0.04578773304820061
+    },
+    {
+      "inference_index": 51,
+      "dataset_index": 51,
+      "frame_index": 51,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600051,
+      "mae": 0.04580444470047951
+    },
+    {
+      "inference_index": 52,
+      "dataset_index": 52,
+      "frame_index": 52,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600052,
+      "mae": 0.044989798218011856
+    },
+    {
+      "inference_index": 53,
+      "dataset_index": 53,
+      "frame_index": 53,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600053,
+      "mae": 0.04474198818206787
+    },
+    {
+      "inference_index": 54,
+      "dataset_index": 54,
+      "frame_index": 54,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600054,
+      "mae": 0.04738116264343262
+    },
+    {
+      "inference_index": 55,
+      "dataset_index": 55,
+      "frame_index": 55,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600055,
+      "mae": 0.045353472232818604
+    },
+    {
+      "inference_index": 56,
+      "dataset_index": 56,
+      "frame_index": 56,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600056,
+      "mae": 0.04472753033041954
+    },
+    {
+      "inference_index": 57,
+      "dataset_index": 57,
+      "frame_index": 57,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600057,
+      "mae": 0.04544142261147499
+    },
+    {
+      "inference_index": 58,
+      "dataset_index": 58,
+      "frame_index": 58,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600058,
+      "mae": 0.04420146346092224
+    },
+    {
+      "inference_index": 59,
+      "dataset_index": 59,
+      "frame_index": 59,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600059,
+      "mae": 0.04098007082939148
+    },
+    {
+      "inference_index": 60,
+      "dataset_index": 60,
+      "frame_index": 60,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600060,
+      "mae": 0.042935602366924286
+    },
+    {
+      "inference_index": 61,
+      "dataset_index": 61,
+      "frame_index": 61,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600061,
+      "mae": 0.043343450874090195
+    },
+    {
+      "inference_index": 62,
+      "dataset_index": 62,
+      "frame_index": 62,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600062,
+      "mae": 0.04310215637087822
+    },
+    {
+      "inference_index": 63,
+      "dataset_index": 63,
+      "frame_index": 63,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600063,
+      "mae": 0.04123949632048607
+    },
+    {
+      "inference_index": 64,
+      "dataset_index": 64,
+      "frame_index": 64,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600064,
+      "mae": 0.0425545871257782
+    },
+    {
+      "inference_index": 65,
+      "dataset_index": 65,
+      "frame_index": 65,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600065,
+      "mae": 0.04411425441503525
+    },
+    {
+      "inference_index": 66,
+      "dataset_index": 66,
+      "frame_index": 66,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600066,
+      "mae": 0.044747497886419296
+    },
+    {
+      "inference_index": 67,
+      "dataset_index": 67,
+      "frame_index": 67,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600067,
+      "mae": 0.04607773572206497
+    },
+    {
+      "inference_index": 68,
+      "dataset_index": 68,
+      "frame_index": 68,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600068,
+      "mae": 0.04471801966428757
+    },
+    {
+      "inference_index": 69,
+      "dataset_index": 69,
+      "frame_index": 69,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600069,
+      "mae": 0.04418064281344414
+    },
+    {
+      "inference_index": 70,
+      "dataset_index": 70,
+      "frame_index": 70,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600070,
+      "mae": 0.04618578776717186
+    },
+    {
+      "inference_index": 71,
+      "dataset_index": 71,
+      "frame_index": 71,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600071,
+      "mae": 0.047503549605607986
+    },
+    {
+      "inference_index": 72,
+      "dataset_index": 72,
+      "frame_index": 72,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600072,
+      "mae": 0.04436290264129639
+    },
+    {
+      "inference_index": 73,
+      "dataset_index": 73,
+      "frame_index": 73,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600073,
+      "mae": 0.04399112984538078
+    },
+    {
+      "inference_index": 74,
+      "dataset_index": 74,
+      "frame_index": 74,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600074,
+      "mae": 0.04427256062626839
+    },
+    {
+      "inference_index": 75,
+      "dataset_index": 75,
+      "frame_index": 75,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600075,
+      "mae": 0.046393901109695435
+    },
+    {
+      "inference_index": 76,
+      "dataset_index": 76,
+      "frame_index": 76,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600076,
+      "mae": 0.04456963390111923
+    },
+    {
+      "inference_index": 77,
+      "dataset_index": 77,
+      "frame_index": 77,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600077,
+      "mae": 0.04611075669527054
+    },
+    {
+      "inference_index": 78,
+      "dataset_index": 78,
+      "frame_index": 78,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600078,
+      "mae": 0.04523618146777153
+    },
+    {
+      "inference_index": 79,
+      "dataset_index": 79,
+      "frame_index": 79,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600079,
+      "mae": 0.04570633918046951
+    },
+    {
+      "inference_index": 80,
+      "dataset_index": 80,
+      "frame_index": 80,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600080,
+      "mae": 0.043730296194553375
+    },
+    {
+      "inference_index": 81,
+      "dataset_index": 81,
+      "frame_index": 81,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600081,
+      "mae": 0.04726588726043701
+    },
+    {
+      "inference_index": 82,
+      "dataset_index": 82,
+      "frame_index": 82,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600082,
+      "mae": 0.04455309361219406
+    },
+    {
+      "inference_index": 83,
+      "dataset_index": 83,
+      "frame_index": 83,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600083,
+      "mae": 0.04300559312105179
+    },
+    {
+      "inference_index": 84,
+      "dataset_index": 84,
+      "frame_index": 84,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600084,
+      "mae": 0.0444602444767952
+    },
+    {
+      "inference_index": 85,
+      "dataset_index": 85,
+      "frame_index": 85,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600085,
+      "mae": 0.04515266418457031
+    },
+    {
+      "inference_index": 86,
+      "dataset_index": 86,
+      "frame_index": 86,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600086,
+      "mae": 0.04559743031859398
+    },
+    {
+      "inference_index": 87,
+      "dataset_index": 87,
+      "frame_index": 87,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600087,
+      "mae": 0.04827612638473511
+    },
+    {
+      "inference_index": 88,
+      "dataset_index": 88,
+      "frame_index": 88,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600088,
+      "mae": 0.0488058365881443
+    },
+    {
+      "inference_index": 89,
+      "dataset_index": 89,
+      "frame_index": 89,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600089,
+      "mae": 0.045918527990579605
+    },
+    {
+      "inference_index": 90,
+      "dataset_index": 90,
+      "frame_index": 90,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600090,
+      "mae": 0.04490996524691582
+    },
+    {
+      "inference_index": 91,
+      "dataset_index": 91,
+      "frame_index": 91,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600091,
+      "mae": 0.0467703714966774
+    },
+    {
+      "inference_index": 92,
+      "dataset_index": 92,
+      "frame_index": 92,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600092,
+      "mae": 0.04735798016190529
+    },
+    {
+      "inference_index": 93,
+      "dataset_index": 93,
+      "frame_index": 93,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600093,
+      "mae": 0.04580215737223625
+    },
+    {
+      "inference_index": 94,
+      "dataset_index": 94,
+      "frame_index": 94,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600094,
+      "mae": 0.045947276055812836
+    },
+    {
+      "inference_index": 95,
+      "dataset_index": 95,
+      "frame_index": 95,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600095,
+      "mae": 0.04925693944096565
+    },
+    {
+      "inference_index": 96,
+      "dataset_index": 96,
+      "frame_index": 96,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600096,
+      "mae": 0.04762381315231323
+    },
+    {
+      "inference_index": 97,
+      "dataset_index": 97,
+      "frame_index": 97,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600097,
+      "mae": 0.04619329050183296
+    },
+    {
+      "inference_index": 98,
+      "dataset_index": 98,
+      "frame_index": 98,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600098,
+      "mae": 0.04733020067214966
+    },
+    {
+      "inference_index": 99,
+      "dataset_index": 99,
+      "frame_index": 99,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600099,
+      "mae": 0.0469118095934391
+    },
+    {
+      "inference_index": 100,
+      "dataset_index": 100,
+      "frame_index": 100,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600100,
+      "mae": 0.0467001236975193
+    },
+    {
+      "inference_index": 101,
+      "dataset_index": 101,
+      "frame_index": 101,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600101,
+      "mae": 0.04947858676314354
+    },
+    {
+      "inference_index": 102,
+      "dataset_index": 102,
+      "frame_index": 102,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600102,
+      "mae": 0.049055080860853195
+    },
+    {
+      "inference_index": 103,
+      "dataset_index": 103,
+      "frame_index": 103,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600103,
+      "mae": 0.0473724901676178
+    },
+    {
+      "inference_index": 104,
+      "dataset_index": 104,
+      "frame_index": 104,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600104,
+      "mae": 0.045773137360811234
+    },
+    {
+      "inference_index": 105,
+      "dataset_index": 105,
+      "frame_index": 105,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600105,
+      "mae": 0.04717497155070305
+    },
+    {
+      "inference_index": 106,
+      "dataset_index": 106,
+      "frame_index": 106,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600106,
+      "mae": 0.04686031490564346
+    },
+    {
+      "inference_index": 107,
+      "dataset_index": 107,
+      "frame_index": 107,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600107,
+      "mae": 0.043399881571531296
+    },
+    {
+      "inference_index": 108,
+      "dataset_index": 108,
+      "frame_index": 108,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600108,
+      "mae": 0.04243747144937515
+    },
+    {
+      "inference_index": 109,
+      "dataset_index": 109,
+      "frame_index": 109,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600109,
+      "mae": 0.046341586858034134
+    },
+    {
+      "inference_index": 110,
+      "dataset_index": 110,
+      "frame_index": 110,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600110,
+      "mae": 0.04753688722848892
+    },
+    {
+      "inference_index": 111,
+      "dataset_index": 111,
+      "frame_index": 111,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600111,
+      "mae": 0.05095081403851509
+    },
+    {
+      "inference_index": 112,
+      "dataset_index": 112,
+      "frame_index": 112,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600112,
+      "mae": 0.051783543080091476
+    },
+    {
+      "inference_index": 113,
+      "dataset_index": 113,
+      "frame_index": 113,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600113,
+      "mae": 0.05262059345841408
+    },
+    {
+      "inference_index": 114,
+      "dataset_index": 114,
+      "frame_index": 114,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600114,
+      "mae": 0.05311368778347969
+    },
+    {
+      "inference_index": 115,
+      "dataset_index": 115,
+      "frame_index": 115,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600115,
+      "mae": 0.052053362131118774
+    },
+    {
+      "inference_index": 116,
+      "dataset_index": 116,
+      "frame_index": 116,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600116,
+      "mae": 0.052736345678567886
+    },
+    {
+      "inference_index": 117,
+      "dataset_index": 117,
+      "frame_index": 117,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600117,
+      "mae": 0.0524153932929039
+    },
+    {
+      "inference_index": 118,
+      "dataset_index": 118,
+      "frame_index": 118,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600118,
+      "mae": 0.052289851009845734
+    },
+    {
+      "inference_index": 119,
+      "dataset_index": 119,
+      "frame_index": 119,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600119,
+      "mae": 0.0543377585709095
+    },
+    {
+      "inference_index": 120,
+      "dataset_index": 120,
+      "frame_index": 120,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600120,
+      "mae": 0.054642438888549805
+    },
+    {
+      "inference_index": 121,
+      "dataset_index": 121,
+      "frame_index": 121,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600121,
+      "mae": 0.053612735122442245
+    },
+    {
+      "inference_index": 122,
+      "dataset_index": 122,
+      "frame_index": 122,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600122,
+      "mae": 0.048973213881254196
+    },
+    {
+      "inference_index": 123,
+      "dataset_index": 123,
+      "frame_index": 123,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600123,
+      "mae": 0.055330611765384674
+    },
+    {
+      "inference_index": 124,
+      "dataset_index": 124,
+      "frame_index": 124,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600124,
+      "mae": 0.05724618583917618
+    },
+    {
+      "inference_index": 125,
+      "dataset_index": 125,
+      "frame_index": 125,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600125,
+      "mae": 0.05479063466191292
+    },
+    {
+      "inference_index": 126,
+      "dataset_index": 126,
+      "frame_index": 126,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600126,
+      "mae": 0.054991573095321655
+    },
+    {
+      "inference_index": 127,
+      "dataset_index": 127,
+      "frame_index": 127,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600127,
+      "mae": 0.05704323574900627
+    },
+    {
+      "inference_index": 128,
+      "dataset_index": 128,
+      "frame_index": 128,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600128,
+      "mae": 0.05476141348481178
+    },
+    {
+      "inference_index": 129,
+      "dataset_index": 129,
+      "frame_index": 129,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600129,
+      "mae": 0.05366714671254158
+    },
+    {
+      "inference_index": 130,
+      "dataset_index": 130,
+      "frame_index": 130,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600130,
+      "mae": 0.05601705238223076
+    },
+    {
+      "inference_index": 131,
+      "dataset_index": 131,
+      "frame_index": 131,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600131,
+      "mae": 0.05800247564911842
+    },
+    {
+      "inference_index": 132,
+      "dataset_index": 132,
+      "frame_index": 132,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600132,
+      "mae": 0.05453244596719742
+    },
+    {
+      "inference_index": 133,
+      "dataset_index": 133,
+      "frame_index": 133,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600133,
+      "mae": 0.05697322636842728
+    },
+    {
+      "inference_index": 134,
+      "dataset_index": 134,
+      "frame_index": 134,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600134,
+      "mae": 0.050638165324926376
+    },
+    {
+      "inference_index": 135,
+      "dataset_index": 135,
+      "frame_index": 135,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600135,
+      "mae": 0.05636969953775406
+    },
+    {
+      "inference_index": 136,
+      "dataset_index": 136,
+      "frame_index": 136,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600136,
+      "mae": 0.054759431630373
+    },
+    {
+      "inference_index": 137,
+      "dataset_index": 137,
+      "frame_index": 137,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600137,
+      "mae": 0.05747270956635475
+    },
+    {
+      "inference_index": 138,
+      "dataset_index": 138,
+      "frame_index": 138,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600138,
+      "mae": 0.051345765590667725
+    },
+    {
+      "inference_index": 139,
+      "dataset_index": 139,
+      "frame_index": 139,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600139,
+      "mae": 0.0537891611456871
+    },
+    {
+      "inference_index": 140,
+      "dataset_index": 140,
+      "frame_index": 140,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600140,
+      "mae": 0.05076904967427254
+    },
+    {
+      "inference_index": 141,
+      "dataset_index": 141,
+      "frame_index": 141,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600141,
+      "mae": 0.055993858724832535
+    },
+    {
+      "inference_index": 142,
+      "dataset_index": 142,
+      "frame_index": 142,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600142,
+      "mae": 0.05365031585097313
+    },
+    {
+      "inference_index": 143,
+      "dataset_index": 143,
+      "frame_index": 143,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600143,
+      "mae": 0.05597648024559021
+    },
+    {
+      "inference_index": 144,
+      "dataset_index": 144,
+      "frame_index": 144,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600144,
+      "mae": 0.051731087267398834
+    },
+    {
+      "inference_index": 145,
+      "dataset_index": 145,
+      "frame_index": 145,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600145,
+      "mae": 0.05169769003987312
+    },
+    {
+      "inference_index": 146,
+      "dataset_index": 146,
+      "frame_index": 146,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600146,
+      "mae": 0.05191270634531975
+    },
+    {
+      "inference_index": 147,
+      "dataset_index": 147,
+      "frame_index": 147,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600147,
+      "mae": 0.05500512197613716
+    },
+    {
+      "inference_index": 148,
+      "dataset_index": 148,
+      "frame_index": 148,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600148,
+      "mae": 0.05456675961613655
+    },
+    {
+      "inference_index": 149,
+      "dataset_index": 149,
+      "frame_index": 149,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600149,
+      "mae": 0.050491150468587875
+    },
+    {
+      "inference_index": 150,
+      "dataset_index": 150,
+      "frame_index": 150,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600150,
+      "mae": 0.050668276846408844
+    },
+    {
+      "inference_index": 151,
+      "dataset_index": 151,
+      "frame_index": 151,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600151,
+      "mae": 0.05297683924436569
+    },
+    {
+      "inference_index": 152,
+      "dataset_index": 152,
+      "frame_index": 152,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600152,
+      "mae": 0.04997124895453453
+    },
+    {
+      "inference_index": 153,
+      "dataset_index": 153,
+      "frame_index": 153,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600153,
+      "mae": 0.051897916942834854
+    },
+    {
+      "inference_index": 154,
+      "dataset_index": 154,
+      "frame_index": 154,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600154,
+      "mae": 0.049483198672533035
+    },
+    {
+      "inference_index": 155,
+      "dataset_index": 155,
+      "frame_index": 155,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600155,
+      "mae": 0.04897252470254898
+    },
+    {
+      "inference_index": 156,
+      "dataset_index": 156,
+      "frame_index": 156,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600156,
+      "mae": 0.05158073827624321
+    },
+    {
+      "inference_index": 157,
+      "dataset_index": 157,
+      "frame_index": 157,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600157,
+      "mae": 0.04966748133301735
+    },
+    {
+      "inference_index": 158,
+      "dataset_index": 158,
+      "frame_index": 158,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600158,
+      "mae": 0.04902602359652519
+    },
+    {
+      "inference_index": 159,
+      "dataset_index": 159,
+      "frame_index": 159,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600159,
+      "mae": 0.05192527920007706
+    },
+    {
+      "inference_index": 160,
+      "dataset_index": 160,
+      "frame_index": 160,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600160,
+      "mae": 0.05073171854019165
+    },
+    {
+      "inference_index": 161,
+      "dataset_index": 161,
+      "frame_index": 161,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600161,
+      "mae": 0.05319074168801308
+    },
+    {
+      "inference_index": 162,
+      "dataset_index": 162,
+      "frame_index": 162,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600162,
+      "mae": 0.045291099697351456
+    },
+    {
+      "inference_index": 163,
+      "dataset_index": 163,
+      "frame_index": 163,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600163,
+      "mae": 0.04723287373781204
+    },
+    {
+      "inference_index": 164,
+      "dataset_index": 164,
+      "frame_index": 164,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600164,
+      "mae": 0.04799598082900047
+    },
+    {
+      "inference_index": 165,
+      "dataset_index": 165,
+      "frame_index": 165,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600165,
+      "mae": 0.049302875995635986
+    },
+    {
+      "inference_index": 166,
+      "dataset_index": 166,
+      "frame_index": 166,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600166,
+      "mae": 0.05032892897725105
+    },
+    {
+      "inference_index": 167,
+      "dataset_index": 167,
+      "frame_index": 167,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600167,
+      "mae": 0.048240672796964645
+    },
+    {
+      "inference_index": 168,
+      "dataset_index": 168,
+      "frame_index": 168,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600168,
+      "mae": 0.04958510771393776
+    },
+    {
+      "inference_index": 169,
+      "dataset_index": 169,
+      "frame_index": 169,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600169,
+      "mae": 0.048177655786275864
+    },
+    {
+      "inference_index": 170,
+      "dataset_index": 170,
+      "frame_index": 170,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600170,
+      "mae": 0.05123945698142052
+    },
+    {
+      "inference_index": 171,
+      "dataset_index": 171,
+      "frame_index": 171,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600171,
+      "mae": 0.049171458929777145
+    },
+    {
+      "inference_index": 172,
+      "dataset_index": 172,
+      "frame_index": 172,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600172,
+      "mae": 0.05012029781937599
+    },
+    {
+      "inference_index": 173,
+      "dataset_index": 173,
+      "frame_index": 173,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600173,
+      "mae": 0.051088329404592514
+    },
+    {
+      "inference_index": 174,
+      "dataset_index": 174,
+      "frame_index": 174,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600174,
+      "mae": 0.05020790919661522
+    },
+    {
+      "inference_index": 175,
+      "dataset_index": 175,
+      "frame_index": 175,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600175,
+      "mae": 0.0520898662507534
+    },
+    {
+      "inference_index": 176,
+      "dataset_index": 176,
+      "frame_index": 176,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600176,
+      "mae": 0.050130460411310196
+    },
+    {
+      "inference_index": 177,
+      "dataset_index": 177,
+      "frame_index": 177,
+      "model_horizon_valid_steps": 32,
+      "seed": 13600177,
+      "mae": 0.0462019145488739
+    },
+    {
+      "inference_index": 178,
+      "dataset_index": 178,
+      "frame_index": 178,
+      "model_horizon_valid_steps": 31,
+      "seed": 13600178,
+      "mae": 0.05125170201063156
+    },
+    {
+      "inference_index": 179,
+      "dataset_index": 179,
+      "frame_index": 179,
+      "model_horizon_valid_steps": 30,
+      "seed": 13600179,
+      "mae": 0.0498259998857975
+    },
+    {
+      "inference_index": 180,
+      "dataset_index": 180,
+      "frame_index": 180,
+      "model_horizon_valid_steps": 29,
+      "seed": 13600180,
+      "mae": 0.052460286766290665
+    },
+    {
+      "inference_index": 181,
+      "dataset_index": 181,
+      "frame_index": 181,
+      "model_horizon_valid_steps": 28,
+      "seed": 13600181,
+      "mae": 0.05085233226418495
+    },
+    {
+      "inference_index": 182,
+      "dataset_index": 182,
+      "frame_index": 182,
+      "model_horizon_valid_steps": 27,
+      "seed": 13600182,
+      "mae": 0.04992050305008888
+    },
+    {
+      "inference_index": 183,
+      "dataset_index": 183,
+      "frame_index": 183,
+      "model_horizon_valid_steps": 26,
+      "seed": 13600183,
+      "mae": 0.04736580699682236
+    },
+    {
+      "inference_index": 184,
+      "dataset_index": 184,
+      "frame_index": 184,
+      "model_horizon_valid_steps": 25,
+      "seed": 13600184,
+      "mae": 0.04570892080664635
+    },
+    {
+      "inference_index": 185,
+      "dataset_index": 185,
+      "frame_index": 185,
+      "model_horizon_valid_steps": 24,
+      "seed": 13600185,
+      "mae": 0.04610702767968178
+    },
+    {
+      "inference_index": 186,
+      "dataset_index": 186,
+      "frame_index": 186,
+      "model_horizon_valid_steps": 23,
+      "seed": 13600186,
+      "mae": 0.04671222344040871
+    },
+    {
+      "inference_index": 187,
+      "dataset_index": 187,
+      "frame_index": 187,
+      "model_horizon_valid_steps": 22,
+      "seed": 13600187,
+      "mae": 0.03967290371656418
+    },
+    {
+      "inference_index": 188,
+      "dataset_index": 188,
+      "frame_index": 188,
+      "model_horizon_valid_steps": 21,
+      "seed": 13600188,
+      "mae": 0.04128633812069893
+    },
+    {
+      "inference_index": 189,
+      "dataset_index": 189,
+      "frame_index": 189,
+      "model_horizon_valid_steps": 20,
+      "seed": 13600189,
+      "mae": 0.04219822958111763
+    },
+    {
+      "inference_index": 190,
+      "dataset_index": 190,
+      "frame_index": 190,
+      "model_horizon_valid_steps": 19,
+      "seed": 13600190,
+      "mae": 0.04052918776869774
+    },
+    {
+      "inference_index": 191,
+      "dataset_index": 191,
+      "frame_index": 191,
+      "model_horizon_valid_steps": 18,
+      "seed": 13600191,
+      "mae": 0.044631678611040115
+    },
+    {
+      "inference_index": 192,
+      "dataset_index": 192,
+      "frame_index": 192,
+      "model_horizon_valid_steps": 17,
+      "seed": 13600192,
+      "mae": 0.04378054663538933
+    },
+    {
+      "inference_index": 193,
+      "dataset_index": 193,
+      "frame_index": 193,
+      "model_horizon_valid_steps": 16,
+      "seed": 13600193,
+      "mae": 0.04367242008447647
+    },
+    {
+      "inference_index": 194,
+      "dataset_index": 194,
+      "frame_index": 194,
+      "model_horizon_valid_steps": 15,
+      "seed": 13600194,
+      "mae": 0.04153333231806755
+    },
+    {
+      "inference_index": 195,
+      "dataset_index": 195,
+      "frame_index": 195,
+      "model_horizon_valid_steps": 14,
+      "seed": 13600195,
+      "mae": 0.04553386941552162
+    },
+    {
+      "inference_index": 196,
+      "dataset_index": 196,
+      "frame_index": 196,
+      "model_horizon_valid_steps": 13,
+      "seed": 13600196,
+      "mae": 0.04375768080353737
+    },
+    {
+      "inference_index": 197,
+      "dataset_index": 197,
+      "frame_index": 197,
+      "model_horizon_valid_steps": 12,
+      "seed": 13600197,
+      "mae": 0.04208691790699959
+    },
+    {
+      "inference_index": 198,
+      "dataset_index": 198,
+      "frame_index": 198,
+      "model_horizon_valid_steps": 11,
+      "seed": 13600198,
+      "mae": 0.044400881975889206
+    },
+    {
+      "inference_index": 199,
+      "dataset_index": 199,
+      "frame_index": 199,
+      "model_horizon_valid_steps": 10,
+      "seed": 13600199,
+      "mae": 0.04724520817399025
+    },
+    {
+      "inference_index": 200,
+      "dataset_index": 200,
+      "frame_index": 200,
+      "model_horizon_valid_steps": 9,
+      "seed": 13600200,
+      "mae": 0.04456207901239395
+    },
+    {
+      "inference_index": 201,
+      "dataset_index": 201,
+      "frame_index": 201,
+      "model_horizon_valid_steps": 8,
+      "seed": 13600201,
+      "mae": 0.052152689546346664
+    },
+    {
+      "inference_index": 202,
+      "dataset_index": 202,
+      "frame_index": 202,
+      "model_horizon_valid_steps": 7,
+      "seed": 13600202,
+      "mae": 0.052542950958013535
+    },
+    {
+      "inference_index": 203,
+      "dataset_index": 203,
+      "frame_index": 203,
+      "model_horizon_valid_steps": 6,
+      "seed": 13600203,
+      "mae": 0.052174050360918045
+    },
+    {
+      "inference_index": 204,
+      "dataset_index": 204,
+      "frame_index": 204,
+      "model_horizon_valid_steps": 5,
+      "seed": 13600204,
+      "mae": 0.05130533501505852
+    },
+    {
+      "inference_index": 205,
+      "dataset_index": 205,
+      "frame_index": 205,
+      "model_horizon_valid_steps": 4,
+      "seed": 13600205,
+      "mae": 0.053462039679288864
+    },
+    {
+      "inference_index": 206,
+      "dataset_index": 206,
+      "frame_index": 206,
+      "model_horizon_valid_steps": 3,
+      "seed": 13600206,
+      "mae": 0.05399133637547493
+    },
+    {
+      "inference_index": 207,
+      "dataset_index": 207,
+      "frame_index": 207,
+      "model_horizon_valid_steps": 2,
+      "seed": 13600207,
+      "mae": 0.06391233950853348
+    },
+    {
+      "inference_index": 208,
+      "dataset_index": 208,
+      "frame_index": 208,
+      "model_horizon_valid_steps": 1,
+      "seed": 13600208,
+      "mae": 0.05734506621956825
+    }
+  ],
+  "trajectory_archive": "/home/magiclab/yujunhao/open_loop_test/results/place_lemon_episode_136_per_frame/full_episode_trajectories.npz",
+  "kai0_viewer_replay": "/home/magiclab/yujunhao/open_loop_test/results/place_lemon_episode_136_per_frame/kai0_viewer_replay.jsonl"
+}

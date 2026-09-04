@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kai0 Inference Viewer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient"></div>
+    <main class="app">
+      <header class="hero">
+        <div class="hero-text">
+          <p class="eyebrow">Kai0 Viewer</p>
+          <h1>Dataset Inference Explorer</h1>
+          <p class="subtitle">
+            Inspect joint L1 error, EE distance, images, and action predictions frame by frame.
+          </p>
+        </div>
+        <div class="hero-meta">
+          <div class="meta-row">
+            <span>Task</span>
+            <strong id="metaTask">-</strong>
+          </div>
+          <div class="meta-row">
+            <span>Checkpoint</span>
+            <strong id="metaCkpt">-</strong>
+          </div>
+          <div class="meta-row">
+            <span>Frames</span>
+            <strong id="metaFrames">-</strong>
+          </div>
+          <div class="meta-row">
+            <span>Mode</span>
+            <strong id="metaMode">Offline</strong>
+          </div>
+          <div class="meta-row">
+            <span>Action Index</span>
+            <strong id="metaActionIdx">-</strong>
+          </div>
+        </div>
+      </header>
+
+      <section class="layout">
+        <div class="left-column">
+          <div class="panel chart-panel">
+            <div class="panel-header">
+              <div>
+                <h2>Loss Curve</h2>
+                <p class="panel-subtitle">Frame order, click or drag the slider.</p>
+              </div>
+              <div class="panel-kpis">
+                <div class="kpi">
+                  <span>Selected</span>
+                  <strong id="kpiFrame">-</strong>
+                </div>
+                <div class="kpi">
+                  <span>L1</span>
+                  <strong id="kpiLoss">-</strong>
+                </div>
+                <div class="kpi">
+                  <span>L1 L/R</span>
+                  <strong id="kpiLossLR">-</strong>
+                </div>
+                <div class="kpi">
+                  <span>EoE Error</span>
+                  <strong id="kpiEeError">-</strong>
+                </div>
+                <div class="kpi">
+                  <span>EoE L/R</span>
+                  <strong id="kpiEeErrorLR">-</strong>
+                </div>
+              </div>
+            </div>
+            <div class="canvas-wrap">
+              <canvas id="lossChart"></canvas>
+            </div>
+            <div class="controls">
+              <div class="control-row">
+                <label for="episodeSelect">Episode</label>
+                <select id="episodeSelect"></select>
+              </div>
+              <div class="control-row">
+                <label for="frameSlider">Frame</label>
+                <input id="frameSlider" type="range" min="0" max="0" value="0" />
+              </div>
+              <div class="control-row">
+                <input id="frameInput" type="number" min="0" value="0" />
+                <button id="jumpButton">Go</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel trajectory-panel">
+            <div class="panel-header">
+              <div>
+                <h2>Trajectory</h2>
+                <p class="panel-subtitle">End-effector 3D path (offline export).</p>
+              </div>
+            </div>
+            <div class="trajectory-frame">
+              <div class="trajectory-placeholder" id="trajectoryPlaceholder">
+                Trajectory viewer not available.
+              </div>
+              <iframe id="trajectoryFrame" title="EE Trajectory Viewer"></iframe>
+              <canvas id="trajectoryCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel detail-panel">
+          <div class="panel-header">
+            <div>
+              <h2>Frame Details</h2>
+              <p class="panel-subtitle">Input image, state values, and action comparison.</p>
+            </div>
+            <div class="panel-kpis">
+              <div class="kpi">
+                <span>Episode</span>
+                <strong id="detailEpisode">-</strong>
+              </div>
+              <div class="kpi">
+                <span>Frame</span>
+                <strong id="detailFrame">-</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="image-card">
+            <div class="image-grid" id="frameImageGrid"></div>
+            <img id="frameImage" alt="frame input" />
+            <div class="image-caption" id="imageCaption">-</div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-tile">
+              <span>Global Index</span>
+              <strong id="detailGlobal">-</strong>
+            </div>
+            <div class="info-tile">
+              <span>Timestamp</span>
+              <strong id="detailTimestamp">-</strong>
+            </div>
+            <div class="info-tile">
+              <span>L1 Loss</span>
+              <strong id="detailLoss">-</strong>
+            </div>
+            <div class="info-tile">
+              <span>L1 Left</span>
+              <strong id="detailLossLeft">-</strong>
+            </div>
+            <div class="info-tile">
+              <span>L1 Right</span>
+              <strong id="detailLossRight">-</strong>
+            </div>
+            <div class="info-tile">
+              <span>L1 Global</span>
+              <strong id="detailLossGlobal">-</strong>
+            </div>
+            <div class="info-tile">
+              <span>EoE Error</span>
+              <strong id="detailEeError">-</strong>
+            </div>
+            <div class="info-tile">
+              <span>EoE Left</span>
+              <strong id="detailEeLeft">-</strong>
+            </div>
+            <div class="info-tile">
+              <span>EoE Right</span>
+              <strong id="detailEeRight">-</strong>
+            </div>
+          </div>
+
+          <div class="chart-block">
+            <div class="chart-title">State Values</div>
+            <canvas id="stateChart"></canvas>
+          </div>
+
+          <div class="chart-block">
+            <div class="chart-title-row">
+              <div class="chart-title">Action: Prediction vs Target</div>
+              <div class="legend">
+                <span class="legend-item">
+                  <i class="legend-swatch legend-pred"></i>Prediction
+                </span>
+                <span class="legend-item">
+                  <i class="legend-swatch legend-target"></i>Target
+                </span>
+              </div>
+            </div>
+            <canvas id="actionChart"></canvas>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="app.js?v=20260211a" defer></script>
+  </body>
+</html>
